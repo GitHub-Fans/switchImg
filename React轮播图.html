@@ -74,8 +74,6 @@
             }
         },
         render:function(){
-            //这边要注意，如果对象是引用类型，操作的时候要注意，就像数组，这边利用数组的复制，
-            // 如果直接那props中的数组来用，则没执行一次，ul就会一直加上两个子节点
             var {count,nowindex,time,infos} =this.state;
             var arr=infos.slice(0,infos.length);
             arr.unshift(arr[arr.length-1]);
@@ -104,7 +102,6 @@
             </div>
     )
     },
-    //下一张
     toNext:function(direction){
         var that=this;
         var {canClick,timer}=this.state;
@@ -121,13 +118,12 @@
         },301)
 
     },
-    //自动播放，falg参数决定轮播方向
     autoPlay:function(flag){
         var {count,nowindex,time,timer}=this.state;
         flag?nowindex++:nowindex--;
         this.setState({time:'0.3s'});
         this.setState({nowindex:nowindex});
-        if(nowindex==count+1)//如果播放到最后一张，修改left值跟过渡世间
+        if(nowindex==count+1)
         {
             var that=this;
             setTimeout(function(){
@@ -136,7 +132,7 @@
             },301)
 
         }
-        if(nowindex==0)//如果播放到第一张，修改left值跟过渡世间
+        if(nowindex==0)
         {
             var that=this;
             setTimeout(function(){
@@ -152,7 +148,6 @@
         timer=setInterval(this.autoPlay.bind(this,true),1200);
         this.setState({timer:timer});
     },
-    //当前图片索引值
     addClass : function(index){
         var activeIndex;
         if(this.state.nowindex === this.props.count+1){
@@ -164,7 +159,6 @@
         }
         return index+1 === activeIndex? 'gaowy' : '';
     },
-    //鼠标悬停
     mouseHover: function(index){
         clearInterval(this.state.timer);
         this.setState({nowindex:index+1,time:'0.3s'});
@@ -180,7 +174,7 @@
             {src:"image/p3.jpg"},
             {src:"image/p4.jpg"}
         ]};
-    window.gwy=ReactDOM.render(<ListItem {...obj}/>,document.getElementById('wrap'));
+    ReactDOM.render(<ListItem {...obj}/>,document.getElementById('wrap'));
 
 </script>
 </body>
